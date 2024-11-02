@@ -3,7 +3,7 @@
 session_start();
  
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: dashboard.php");
+    header("location: profileinfo.php");
     exit;
 }
 
@@ -53,7 +53,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["username"] = $username;                            
                             
                            
-                            header("location:dashboard.php");
+                            header("location: profileinfo.php");
                         } else{
                            
                             $login_err = "Invalid username or password.";
