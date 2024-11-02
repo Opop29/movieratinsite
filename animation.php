@@ -16,7 +16,6 @@ $error_msg = "";
 
 // Fetch movies from the database
 $sql = "SELECT * FROM movies WHERE genre = 'Animation'";
-
 if ($stmt = $pdo->prepare($sql)) {
     if ($stmt->execute()) {
         $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -26,13 +25,35 @@ if ($stmt = $pdo->prepare($sql)) {
     unset($stmt);
 }
 
+// Get user ID
+$userId = $_SESSION["id"];
+
+// Fetch user's ratings for animation movies
+$userRatings = [];
+$ratingsSql = "SELECT movie_id, rating FROM movie_ratings WHERE user_id = :user_id";
+if ($ratingsStmt = $pdo->prepare($ratingsSql)) {
+    $ratingsStmt->bindParam(":user_id", $userId, PDO::PARAM_INT);
+    if ($ratingsStmt->execute()) {
+        $userRatings = $ratingsStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    unset($ratingsStmt);
+}
+
+// Store ratings in an associative array for easy lookup
+$userRatingsArray = [];
+foreach ($userRatings as $rating) {
+    $userRatingsArray[$rating['movie_id']] = $rating['rating'];
+}
+
 // Handle rating submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $movie_id = $_POST['movie_id'];
     $rating = $_POST['rating'];
 
-    // Validate the rating
-    if ($rating < 1 || $rating > 5) {
+    // Check if the user has already rated this movie
+    if (isset($userRatingsArray[$movie_id])) {
+        $error_msg = "You have already rated this movie.";
+    } elseif ($rating < 1 || $rating > 5) {
         $error_msg = "Please select a valid rating between 1 and 5.";
     } else {
         // Insert the rating into the database
@@ -43,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(":rating", $rating, PDO::PARAM_INT);
 
             if ($stmt->execute()) {
-                header("location: animation.php"); // Refresh the page to show the new rating
+                header("location: animation.php"); // Refresh to show the new rating status
                 exit;
             } else {
                 $error_msg = "Failed to submit rating. Please try again.";
@@ -61,7 +82,7 @@ unset($pdo);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Animated Movies</title>
+    <title>Animation Movies</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body { font: 14px sans-serif; }
@@ -97,21 +118,26 @@ unset($pdo);
                         <div class="card-body">
                             <h5 class="card-title"><?php echo htmlspecialchars($movie['title']); ?></h5>
                             <p class="card-text"><?php echo htmlspecialchars($movie['description']); ?></p>
-                            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                                <input type="hidden" name="movie_id" value="<?php echo $movie['id']; ?>">
-                                <div class="form-group">
-                                    <label for="rating">Rate this movie:</label>
-                                    <select name="rating" class="form-control" required>
-                                        <option value="">Select Rating</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit Rating</button>
-                            </form>
+                            
+                            <?php if (isset($userRatingsArray[$movie['id']])): ?>
+                                <p><strong>Your Rating:</strong> <?php echo $userRatingsArray[$movie['id']]; ?> (Rated)</p>
+                            <?php else: ?>
+                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                                    <input type="hidden" name="movie_id" value="<?php echo $movie['id']; ?>">
+                                    <div class="form-group">
+                                        <label for="rating">Rate this movie:</label>
+                                        <select name="rating" class="form-control" required>
+                                            <option value="">Select Rating</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit Rating</button>
+                                </form>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

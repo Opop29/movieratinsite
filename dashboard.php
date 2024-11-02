@@ -46,8 +46,6 @@
         /* Genre Colors */
         .animation { background-color: #ff6b6b; }
         .comedy { background-color: #4ecdc4; }
-        .action { background-color: #1a535c; }
-        .horror { background-color: #ff6347; }
     </style>
 </head>
 <body>
@@ -60,7 +58,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                <a class="nav-link" href="profile.php">Profile</a>
+                    <a class="nav-link" href="profile.php">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="historylog.php">History Log</a>
@@ -77,8 +75,6 @@
         <!-- Genre Cards with Links -->
         <a href="animation.php" class="genre-card animation">Animation</a>
         <a href="comedy.php" class="genre-card comedy">Comedy</a>
-        <a href="action.php" class="genre-card action">Action</a>
-        <a href="horror.php" class="genre-card horror">Horror</a>
     </div>
 
     <!-- Bootstrap JS and dependencies -->

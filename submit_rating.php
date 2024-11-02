@@ -10,37 +10,35 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 // Include config file
 require_once "config.php";
 
-// Define variables
-$movie_id = $rating = "";
-$error_msg = "";
-
-// Process rating submission
+// Check if form data is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $movie_id = $_POST['movie_id'];
-    $rating = $_POST['rating'];
-
-    // Validate the rating
-    if ($rating < 1 || $rating > 5) {
-        $error_msg = "Please select a valid rating between 1 and 5.";
+    $userId = $_SESSION["id"];
+    $movieId = $_POST["movie_id"];
+    $rating = $_POST["rating"];
+    
+    // Check if the user has already rated this movie
+    $sql = "SELECT * FROM movie_ratings WHERE user_id = :user_id AND movie_id = :movie_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(":user_id", $userId, PDO::PARAM_INT);
+    $stmt->bindParam(":movie_id", $movieId, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    // If user has already rated the movie, show a message
+    if ($stmt->rowCount() > 0) {
+        echo "<script>alert('You have already rated this movie.'); window.location.href='comedy.php';</script>";
     } else {
         // Insert the rating into the database
         $sql = "INSERT INTO movie_ratings (user_id, movie_id, rating) VALUES (:user_id, :movie_id, :rating)";
-        if ($stmt = $pdo->prepare($sql)) {
-            $stmt->bindParam(":user_id", $_SESSION["id"], PDO::PARAM_INT);
-            $stmt->bindParam(":movie_id", $movie_id, PDO::PARAM_INT);
-            $stmt->bindParam(":rating", $rating, PDO::PARAM_INT);
-
-            if ($stmt->execute()) {
-                header("location: animation.php"); // Redirect to animation page after successful submission
-                exit;
-            } else {
-                $error_msg = "Failed to submit rating. Please try again.";
-            }
-            unset($stmt);
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(":user_id", $userId, PDO::PARAM_INT);
+        $stmt->bindParam(":movie_id", $movieId, PDO::PARAM_INT);
+        $stmt->bindParam(":rating", $rating, PDO::PARAM_INT);
+        
+        if ($stmt->execute()) {
+            echo "<script>alert('Thank you for your rating!'); window.location.href='comedy.php';</script>";
+        } else {
+            echo "<script>alert('There was an error saving your rating. Please try again.'); window.location.href='comedy.php';</script>";
         }
     }
 }
-
-// Close the connection
-unset($pdo);
 ?>
