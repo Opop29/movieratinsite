@@ -39,40 +39,53 @@ foreach ($userRatings as $rating) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comedy Movies</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="nav.css">
+
     <style>
         body {
+            background-color: #1b1b1b; /* Dark background */
+            color: white; /* White text */
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+        }
+        .wrapper {
+            width: 800px;
+            padding: 20px;
+            margin: 0 auto;
         }
         .movie-card {
             margin: 20px;
             padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
+            border: none;
+            border-radius: 10px;
+            background-color: #333; /* Dark card background */
+        }
+        .movie-card h4 {
+            color: #76ff03; /* Green for titles */
+        }
+        .btn-primary {
+            background-color: #76ff03; /* Green button */
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #66bb6a; /* Darker green on hover */
         }
     </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #343a40;">
-        <a class="navbar-brand" href="#">Movie Dashboard</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="profile.php">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="historylog.php">History Log</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Logout</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="dashboard.php">MyMovies</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link active" href="profile.php">Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="history.php">History Log</a></li>
+            <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+        </ul>
+    </div>
+</nav>
 
-    <div class="container mt-5">
+
+    <div class="wrapper mt-5">
         <h2>Comedy Movies</h2>
         <div class="row">
             <?php foreach ($movies as $movie): ?>

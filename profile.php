@@ -37,6 +37,7 @@ unset($pdo);
     <meta charset="UTF-8">
     <title>Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body { font: 14px sans-serif; }
@@ -54,16 +55,17 @@ unset($pdo);
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="dashboard.php">MyMovies</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link active" href="profile.php">Profile</a></li>
-                <li class="nav-item"><a class="nav-link" href="history.php">History Log</a></li>
-                <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
-            </ul>
-        </div>
-    </nav>
+    <a class="navbar-brand" href="dashboard.php">MyMovies</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link active" href="profile.php">Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="history.php">History Log</a></li>
+            <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
 
     <div class="wrapper mt-4">
         <h2>Profile</h2>

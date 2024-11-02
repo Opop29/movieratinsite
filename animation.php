@@ -83,24 +83,56 @@ unset($pdo);
 <head>
     <meta charset="UTF-8">
     <title>Animation Movies</title>
+    <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body { font: 14px sans-serif; }
-        .wrapper { width: 800px; padding: 20px; margin: 0 auto; }
-        .movie-poster { width: 150px; height: auto; }
+        body {
+            background-color: #1b1b1b;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        .wrapper {
+            width: 800px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+        .alert {
+            background-color: #c62828; /* Red for error messages */
+        }
+        .movie-poster {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .card {
+            background-color: #333; /* Dark background for cards */
+            border: none;
+            border-radius: 10px;
+        }
+        .card-title {
+            color: #76ff03; /* Green for titles */
+        }
+        .btn-primary {
+            background-color: #76ff03; /* Green button */
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #66bb6a; /* Darker green on hover */
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="dashboard.php">Movie Dashboard</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
-                <li class="nav-item"><a class="nav-link" href="history.php">History Log</a></li>
-                <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
-            </ul>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="dashboard.php">MyMovies</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link active" href="profile.php">Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="history.php">History Log</a></li>
+            <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
 
     <div class="wrapper">
         <h2>Animation Movies</h2>
@@ -120,7 +152,7 @@ unset($pdo);
                             <p class="card-text"><?php echo htmlspecialchars($movie['description']); ?></p>
                             
                             <?php if (isset($userRatingsArray[$movie['id']])): ?>
-                                <p><strong>Your Rating:</strong> <?php echo $userRatingsArray[$movie['id']]; ?> (Rated)</p>
+                                <p><strong>Your Rating:</strong> <?php echo $userRatingsArray[$movie['id']]; ?></p>
                             <?php else: ?>
                                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                     <input type="hidden" name="movie_id" value="<?php echo $movie['id']; ?>">

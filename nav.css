@@ -1,0 +1,61 @@
+/* Navigation Bar Styles */
+.navbar {
+    background-color: #343a40; /* Dark background */
+    padding: 15px; /* Add padding for a better look */
+}
+
+.navbar-brand {
+    color: #00ff00; /* Bright green for the brand */
+    font-size: 1.75em; /* Increase font size for visibility */
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.navbar-brand:hover {
+    color: #ffffff; /* Change to white on hover */
+}
+
+.nav-link {
+    color: #ffffff; /* White text for links */
+    margin-right: 20px; /* Spacing between links */
+    transition: color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    position: relative; /* Position for hover effect */
+}
+
+.nav-link:hover {
+    color: #00ff00; /* Bright green on hover */
+    transform: translateY(-3px); /* Slightly lift link on hover */
+}
+
+/* Active Link Style */
+.nav-link.active {
+    font-weight: bold; /* Bold style for active link */
+    color: #00ff00; /* Bright green for active link */
+}
+
+/* Animation for Hover Effect */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: #00ff00; /* Green underline */
+    transform: scaleX(0); /* Initially hidden */
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.nav-link:hover::after {
+    transform: scaleX(1); /* Show underline on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        text-align: center; /* Center text for mobile */
+    }
+
+    .nav-link {
+        margin: 10px 0; /* Stack links vertically */
+    }
+}

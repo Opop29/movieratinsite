@@ -84,8 +84,85 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta charset="UTF-8">
     <title>Sign Up</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('./media/4.gif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .wrapper {
+            width: 360px;
+            padding: 30px;
+            background-color: #fff; /* White background */
+            border-radius: 20px;
+            box-shadow: 0px 0px 30px rgba(0, 255, 0, 0.7), 0 0 0 4px black; /* Green shadow and black border */
+            background-image: url('./media/5.jpg'); /* Background image */
+            background-size: cover;
+            background-position: center;
+            text-align: center; /* Center text within wrapper */
+        }
+
+        .wrapper h2 {
+            margin-bottom: 20px;
+            color: #28a745; /* Green color for headings */
+            font-weight: bold; /* Bold font */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Text shadow */
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: #28a745; /* Green color for labels */
+            font-weight: bold; /* Bold font */
+        }
+
+        .form-control {
+            border-color: #28a745; /* Green border */
+            font-weight: bold; /* Bold font */
+        }
+
+        .form-control:focus {
+            border-color: #218838; /* Darker green when focused */
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, .25); /* Focus effect */
+        }
+
+        .btn-primary {
+            background-color: #28a745; /* Green button */
+            border-color: #218838; /* Darker green border */
+            font-weight: bold; /* Bold font */
+        }
+
+        .btn-primary:hover {
+            background-color: #218838; /* Darker green on hover */
+            border-color: #1e7e34; /* Even darker border on hover */
+        }
+
+        .alert {
+            margin-top: 20px;
+        }
+        
+        p {
+            font-weight: bold;
+            color: white;
+        }
+
+        a {
+            font-weight: bold;
+            color: #28a745; /* Green for links */
+        } 
+    </style>
 </head>
+
 <body>
     <div class="wrapper">
         <h2>Sign Up</h2>
