@@ -37,6 +37,7 @@
             border-radius: 10px;
             font-size: 24px;
             font-weight: bold;
+            text-decoration: none;
             transition: transform 0.3s;
         }
         .genre-card:hover {
@@ -59,7 +60,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="profileinfo.php">Profile</a>
+                <a class="nav-link" href="profile.php">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="historylog.php">History Log</a>
@@ -73,11 +74,11 @@
 
     <!-- Dashboard Content -->
     <div class="dashboard-container">
-        <!-- Genre Cards -->
-        <div class="genre-card animation">Animation</div>
-        <div class="genre-card comedy">Comedy</div>
-        <div class="genre-card action">Action</div>
-        <div class="genre-card horror">Horror</div>
+        <!-- Genre Cards with Links -->
+        <a href="animation.php" class="genre-card animation">Animation</a>
+        <a href="comedy.php" class="genre-card comedy">Comedy</a>
+        <a href="action.php" class="genre-card action">Action</a>
+        <a href="horror.php" class="genre-card horror">Horror</a>
     </div>
 
     <!-- Bootstrap JS and dependencies -->
