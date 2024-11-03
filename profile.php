@@ -40,32 +40,77 @@ unset($pdo);
     <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        body { font: 14px sans-serif; }
-        .wrapper { width: 400px; padding: 20px; margin: 0 auto; }
-        .editable { cursor: pointer; }
+        /* General Body Styles */
+        body {
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text color */
+            font: 14px sans-serif;
+        }
+
+        /* Wrapper Styles */
+        .wrapper {
+            width: 400px;
+            padding: 20px;
+            margin: 0 auto;
+            background-color: #1e1e1e; /* Slightly lighter dark for contrast */
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Editable Text */
+        .editable {
+            cursor: pointer;
+            color: #4caf50; /* Green text color for editable fields */
+        }
+
         .form-control-inline {
             display: inline-block;
             width: auto;
             vertical-align: middle;
         }
-        .save-icon { color: green; cursor: pointer; }
-        .edit-icon { color: blue; cursor: pointer; }
+
+        /* Icon Styles */
+        .save-icon {
+            color: #4caf50; /* Green color for save icon */
+            cursor: pointer;
+        }
+
+        .edit-icon {
+            color: #4caf50; /* Green color for edit icon */
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* Table Styles */
+        .table th {
+            background-color: #333333; /* Dark header background */
+            color: #4caf50; /* Green text color for headers */
+            font-weight: bold;
+        }
+
+        .table td, .table th {
+            color: #e0e0e0;
+        }
+        
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="dashboard.php">MyMovies</a>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link active" href="profile.php">Profile</a></li>
-            <li class="nav-item"><a class="nav-link" href="history.php">History Log</a></li>
-            <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
-        </ul>
-    </div>
-</nav>
-
+        <a class="navbar-brand" href="dashboard.php">MyMovies</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link active" href="profile.php">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="history.php">History Log</a></li>
+                <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <div class="wrapper mt-4">
         <h2>Profile</h2>

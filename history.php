@@ -72,7 +72,6 @@ if ($stmt = $pdo->prepare($unionSql)) {
 // Close connection
 unset($pdo);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,61 +80,101 @@ unset($pdo);
     <link rel="stylesheet" href="nav.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-/* Body Styles */
-body {
-    background-color: #f8f9fa; /* Light background for contrast */
-    color: #343a40; /* Dark text color for readability */
-    font-family: Arial, sans-serif; /* Font family */
-}
+        /* General Body Styles */
+        body {
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text color */
+            font-family: Arial, sans-serif;
+        }
 
-/* Wrapper Styles */
-.wrapper {
-    width: 90%; /* Responsive width */
-    max-width: 1000px; /* Maximum width */
-    padding: 20px; /* Padding for content */
-    margin: 30px auto; /* Centering with margin */
-    background-color: #ffffff; /* White background for the content area */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-}
+        /* Wrapper Styles */
+        .wrapper {
+            width: 90%;
+            max-width: 1000px;
+            padding: 20px;
+            margin: 30px auto;
+            background-color: #1e1e1e; /* Slightly lighter dark for contrast */
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
 
-/* Table Styles */
-.table-container {
-    margin-bottom: 30px; /* Space between tables */
-}
+        /* Button Styles */
+        .btn {
+            background-color: #4caf50; /* Green color for buttons */
+            color: #ffffff;
+            border: none;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
 
-.table {
-    border-radius: 10px; /* Rounded corners for tables */
-    overflow: hidden; /* To ensure border radius is respected */
-}
+        .btn:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
 
-.table th {
-    background-color: #343a40; /* Dark background for table header */
-    color: #ffffff; /* White text for headers */
-}
+        /* Table Styles */
+        .table-container {
+            margin-bottom: 30px;
+            display: none; /* Hide initially */
+        }
 
-.table tbody tr:nth-child(even) {
-    background-color: #f2f2f2; /* Light gray for even rows */
-}
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
 
-.table tbody tr:hover {
-    background-color: #e2e2e2; /* Light hover effect for rows */
-}
+        .table th {
+            background-color: #333333; /* Dark header background */
+            color: #4caf50; /* Green text color for headers */
+            font-weight: bold;
+        }
 
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-    .navbar {
-        text-align: center; /* Center text for mobile */
-    }
+        .table tbody tr:nth-child(even) {
+            background-color: #2a2a2a; /* Darker gray for even rows */
+        }
 
-    .nav-link {
-        margin: 10px 0; /* Stack links vertically */
-    }
-}
+        .table tbody tr:hover {
+            background-color: #444444; /* Slightly lighter gray on hover */
+        }
+
+        .table td, .table th {
+            color: #e0e0e0;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: #333333;
+        }
+
+        .navbar-brand, .nav-link {
+            color: #4caf50 !important; /* Green navbar text */
+        }
+
+        .nav-link:hover {
+            color: #ffffff !important;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            .navbar {
+                text-align: center;
+            }
+
+            .nav-link {
+                margin: 10px 0;
+            }
+        }
     </style>
+    <script>
+        function showTable(tableId) {
+            // Hide all table containers
+            document.querySelectorAll('.table-container').forEach(table => table.style.display = 'none');
+            // Show the selected table container
+            document.getElementById(tableId).style.display = 'block';
+        }
+    </script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" href="dashboard.php">MyMovies</a>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
@@ -147,85 +186,90 @@ body {
     </div>
 </nav>
 
-    <div class="wrapper">
-        <h2>History Log</h2>
+<div class="wrapper">
+    <h2>History Log</h2>
 
-        <?php if (!empty($error_msg)) echo '<div class="alert alert-danger">' . $error_msg . '</div>'; ?>
+    <?php if (!empty($error_msg)) echo '<div class="alert alert-danger">' . $error_msg . '</div>'; ?>
 
-        <!-- LEFT JOIN Data -->
-        <div class="table-container">
-            <h4>LEFT JOIN</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
+    <!-- Buttons to toggle tables -->
+    <button class="btn" onclick="showTable('leftJoinTable')">Show LEFT JOIN</button>
+    <button class="btn" onclick="showTable('rightJoinTable')">Show RIGHT JOIN</button>
+    <button class="btn" onclick="showTable('unionTable')">Show UNION of LEFT and RIGHT JOIN</button>
+
+    <!-- LEFT JOIN Data -->
+    <div id="leftJoinTable" class="table-container">
+        <h4>LEFT JOIN</h4>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Movie Title</th>
+                    <th>Rating</th>
+                    <th>Rated At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($leftJoinData as $row): ?>
                     <tr>
-                        <th>Username</th>
-                        <th>Movie Title</th>
-                        <th>Rating</th>
-                        <th>Rated At</th>
+                        <td><?php echo htmlspecialchars($row['username']); ?></td>
+                        <td><?php echo htmlspecialchars($row['title']); ?></td>
+                        <td><?php echo htmlspecialchars($row['rating']); ?></td>
+                        <td><?php echo htmlspecialchars($row['rated_at']); ?></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($leftJoinData as $row): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['username']); ?></td>
-                            <td><?php echo htmlspecialchars($row['title']); ?></td>
-                            <td><?php echo htmlspecialchars($row['rating']); ?></td>
-                            <td><?php echo htmlspecialchars($row['rated_at']); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- RIGHT JOIN Data -->
-        <div class="table-container">
-            <h4>RIGHT JOIN</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Movie Title</th>
-                        <th>Rating</th>
-                        <th>Rated At</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($rightJoinData as $row): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['username']); ?></td>
-                            <td><?php echo htmlspecialchars($row['title']); ?></td>
-                            <td><?php echo htmlspecialchars($row['rating']); ?></td>
-                            <td><?php echo htmlspecialchars($row['rated_at']); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- UNION Data -->
-        <div class="table-container">
-            <h4>UNION of LEFT and RIGHT JOIN</h4>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Movie Title</th>
-                        <th>Rating</th>
-                        <th>Rated At</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($unionData as $row): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($row['user_name']); ?></td>
-                            <td><?php echo htmlspecialchars($row['movie_title']); ?></td>
-                            <td><?php echo htmlspecialchars($row['rating']); ?></td>
-                            <td><?php echo htmlspecialchars($row['rated_at']); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
+
+    <!-- RIGHT JOIN Data -->
+    <div id="rightJoinTable" class="table-container">
+        <h4>RIGHT JOIN</h4>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Movie Title</th>
+                    <th>Rating</th>
+                    <th>Rated At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($rightJoinData as $row): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['username']); ?></td>
+                        <td><?php echo htmlspecialchars($row['title']); ?></td>
+                        <td><?php echo htmlspecialchars($row['rating']); ?></td>
+                        <td><?php echo htmlspecialchars($row['rated_at']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- UNION Data -->
+    <div id="unionTable" class="table-container">
+        <h4>UNION of LEFT and RIGHT JOIN</h4>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Movie Title</th>
+                    <th>Rating</th>
+                    <th>Rated At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($unionData as $row): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['user_name']); ?></td>
+                        <td><?php echo htmlspecialchars($row['movie_title']); ?></td>
+                        <td><?php echo htmlspecialchars($row['rating']); ?></td>
+                        <td><?php echo htmlspecialchars($row['rated_at']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>
