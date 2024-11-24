@@ -128,7 +128,7 @@
         .selected-genre {
             margin-top: 30px;
             font-size: 24px;
-            color: #00cc00; /* Bright green for selected genre */
+            color: #00cc00;
         }
     </style>
 </head>

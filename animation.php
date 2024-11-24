@@ -1,20 +1,17 @@
 <?php
 session_start();
 
-// Check if the user is logged in; if not, redirect to login page
+// gina check nia ang user if naka loggin ba
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: login.php");
     exit;
 }
 
-// Include config file
 require_once "config.php";
 
-// Define variables
 $movies = [];
 $error_msg = "";
 
-// Fetch movies from the database
 $sql = "SELECT * FROM movies WHERE genre = 'Animation'";
 if ($stmt = $pdo->prepare($sql)) {
     if ($stmt->execute()) {
@@ -25,10 +22,8 @@ if ($stmt = $pdo->prepare($sql)) {
     unset($stmt);
 }
 
-// Get user ID
 $userId = $_SESSION["id"];
 
-// Fetch user's ratings for animation movies
 $userRatings = [];
 $ratingsSql = "SELECT movie_id, rating FROM movie_ratings WHERE user_id = :user_id";
 if ($ratingsStmt = $pdo->prepare($ratingsSql)) {
@@ -39,13 +34,11 @@ if ($ratingsStmt = $pdo->prepare($ratingsSql)) {
     unset($ratingsStmt);
 }
 
-// Store ratings in an associative array for easy lookup
 $userRatingsArray = [];
 foreach ($userRatings as $rating) {
     $userRatingsArray[$rating['movie_id']] = $rating['rating'];
 }
 
-// Handle rating submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $movie_id = $_POST['movie_id'];
     $rating = $_POST['rating'];
